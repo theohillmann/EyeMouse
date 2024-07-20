@@ -1,2 +1,3 @@
-from modules.hand_tracker import HandTracker
+from modules.hand_tracker import HandTracker, HandLandMarks
 from modules.video_controller import VideoController
+from modules.device_controller import DeviceController

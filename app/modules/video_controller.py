@@ -2,6 +2,8 @@ import cv2
 import pyautogui
 from dataclasses import dataclass, field
 from modules.hand_tracker import HandTracker
+from modules.device_controller import DeviceController
+
 
 @dataclass
 class ScreenConfig:
@@ -23,6 +25,7 @@ class VideoController:
     screen_config: ScreenConfig = field(default_factory=ScreenConfig.create)
     exit_key: int = 27
     hand_tracker: HandTracker = field(default_factory=HandTracker)
+    device_controller: DeviceController = field(default_factory=DeviceController)
 
     def show_video(self):
         cap = self.set_camera()
@@ -33,6 +36,8 @@ class VideoController:
 
             hand_marks = self.hand_tracker.get_landmarks(frame)
             self.hand_tracker.draw_hand_landmarks(hand_marks, frame)
+            if hand_marks:
+                self.device_controller.control(frame, hand_marks[0])
 
             cv2.imshow('Hand Tracking', frame)
 

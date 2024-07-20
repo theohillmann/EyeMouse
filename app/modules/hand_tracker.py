@@ -4,8 +4,10 @@ import mediapipe as mp
 from dataclasses import dataclass, field
 
 class HandLandMarks(Enum):
+    HAND_BOTTOM = 0
     THUMB_TIP = 4
     INDEX_TIP = 8
+    MIDDLE_BOTTOM = 9
     MIDDLE_TIP = 12
     RING_TIP = 16
     LITTLE_TIP = 20
@@ -32,17 +34,3 @@ class HandTracker:
                 self.mp_drawing.draw_landmarks(
                     frame, hand_landmark, self.mp_hands.HAND_CONNECTIONS)
 
-    # def process_landmarks(self, hand_landmarks, frame):
-    #     h, w, _ = frame.shape
-    #     for index, landmark in enumerate(hand_landmarks.landmark):
-    #         x = int(landmark.x * w)
-    #         y = int(landmark.y * h)
-            # if index == HandLandMarks.INDEX_TIP.value:
-            #     self.draw_landmark_index(frame, index, x, y)
-                # self.move_mouse(x, y)
-
-    # def draw_landmark_index(self, frame, index, x, y):
-    #     cv2.putText(frame, str(index), (x, y), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 1)
-
-    # def move_mouse(self, x, y):
-    #     pyautogui.moveTo(x, y, 0.1)
