@@ -7,10 +7,12 @@ from modules import HandLandMarks
 @dataclass
 class DeviceController:
     hand_landmarks: list = field(init=False)
+    is_clicking: bool = False
 
     def control(self, frame, hand_landmarks_object):
         self.hand_landmarks = hand_landmarks_object.landmark
         self.move_mouse(frame)
+        self.click()
         # print(self.correct_hand_direction(self.is_finger_up(HandLandMarks.INDEX_TIP)))
 
     def correct_hand_direction(self, condition):
@@ -39,3 +41,16 @@ class DeviceController:
                 y = int(landmark.y * h)
                 if index == HandLandMarks.INDEX_TIP.value:
                     pyautogui.moveTo(x, y, 0.1)
+
+    def click(self):
+        if (
+            self.is_finger_up(HandLandMarks.INDEX_TIP)
+            and self.is_finger_up(HandLandMarks.LITTLE_TIP)
+            and self.is_finger_up(HandLandMarks.MIDDLE_TIP)
+            and self.is_clicking == False
+        ):
+            pyautogui.click()
+            self.is_clicking = True
+
+        if self.is_clicking and not self.is_finger_up(HandLandMarks.MIDDLE_TIP):
+            self.is_clicking = False
