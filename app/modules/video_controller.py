@@ -34,10 +34,10 @@ class VideoController:
             if not ret:
                 break
 
-            hand_marks = self.hand_tracker.get_landmarks(frame)
-            self.hand_tracker.draw_hand_landmarks(hand_marks, frame)
-            if hand_marks:
-                self.device_controller.control(frame, hand_marks[0])
+            hand_landmarks = self.hand_tracker.get_landmarks(frame)
+            self.hand_tracker.draw_hand_landmarks(hand_landmarks, frame)
+            if hand_landmarks:
+                self.device_controller.control(frame, hand_landmarks[0])
 
             cv2.imshow('Hand Tracking', frame)
 
