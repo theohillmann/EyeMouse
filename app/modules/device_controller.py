@@ -8,6 +8,8 @@ from modules import HandLandMarks
 
 @dataclass
 class DeviceController:
+    max_width: int
+    max_height: int
     hand_landmarks: list = field(init=False)
     is_clicking: bool = False
     middle_finger_up: bool = False
@@ -46,8 +48,9 @@ class DeviceController:
         ):
             h, w, _ = frame.shape
             for index, landmark in enumerate(self.hand_landmarks):
-                x = int(landmark.x * w)
-                y = int(landmark.y * h)
+                # print(landmark.y)
+                x = int(landmark.x * self.max_width)
+                y = int(landmark.y * self.max_height)
                 if index == HandLandMarks.INDEX_TIP.value:
                     pyautogui.moveTo(x, y)
 
